@@ -43,14 +43,12 @@ const SignIn = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.inner}>
-        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.emoji}>📚</Text>
           <Text style={styles.title}>Welcome back</Text>
           <Text style={styles.subtitle}>Sign in to your book tracker</Text>
         </View>
 
-        {/* Form */}
         <View style={styles.form}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
