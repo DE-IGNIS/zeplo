@@ -1,4 +1,3 @@
-// lib/books.ts
 import { supabase } from "./supabase";
 
 export type Book = {
@@ -13,12 +12,17 @@ export type Book = {
 
 export type NewBook = Omit<Book, "id" | "created_at">;
 
-export async function addBook(book: NewBook): Promise<{ error: string | null }> {
+export async function addBook(
+  book: NewBook,
+): Promise<{ error: string | null }> {
   const { error } = await supabase.from("books").insert(book);
   return { error: error?.message ?? null };
 }
 
-export async function getBooks(): Promise<{ data: Book[]; error: string | null }> {
+export async function getBooks(): Promise<{
+  data: Book[];
+  error: string | null;
+}> {
   const { data, error } = await supabase
     .from("books")
     .select("*")
@@ -27,14 +31,16 @@ export async function getBooks(): Promise<{ data: Book[]; error: string | null }
   return { data: data ?? [], error: error?.message ?? null };
 }
 
-export async function deleteBook(id: string): Promise<{ error: string | null }> {
+export async function deleteBook(
+  id: string,
+): Promise<{ error: string | null }> {
   const { error } = await supabase.from("books").delete().eq("id", id);
   return { error: error?.message ?? null };
 }
 
 export async function updateBook(
   id: string,
-  updates: Partial<NewBook>
+  updates: Partial<NewBook>,
 ): Promise<{ error: string | null }> {
   const { error } = await supabase.from("books").update(updates).eq("id", id);
   return { error: error?.message ?? null };
@@ -56,7 +62,10 @@ export type Stats = {
   byYear: YearlyStats[];
 };
 
-export async function getStats(): Promise<{ data: Stats | null; error: string | null }> {
+export async function getStats(): Promise<{
+  data: Stats | null;
+  error: string | null;
+}> {
   const { data, error } = await supabase
     .from("books")
     .select("created_at, genre");
@@ -69,10 +78,8 @@ export async function getStats(): Promise<{ data: Stats | null; error: string | 
     };
   }
 
-  // Total books
   const totalBooks = data.length;
 
-  // Favourite genre — most frequently occurring non-null genre
   const genreCounts: Record<string, number> = {};
   for (const book of data) {
     if (book.genre?.trim()) {
@@ -80,11 +87,11 @@ export async function getStats(): Promise<{ data: Stats | null; error: string | 
       genreCounts[g] = (genreCounts[g] ?? 0) + 1;
     }
   }
-  const favouriteGenre = Object.keys(genreCounts).length > 0
-    ? Object.entries(genreCounts).sort((a, b) => b[1] - a[1])[0][0]
-    : null;
+  const favouriteGenre =
+    Object.keys(genreCounts).length > 0
+      ? Object.entries(genreCounts).sort((a, b) => b[1] - a[1])[0][0]
+      : null;
 
-  // Books per month grouped by year
   const yearMap: Record<number, Record<number, number>> = {};
   for (const book of data) {
     const date = new Date(book.created_at);

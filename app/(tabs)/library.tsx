@@ -41,8 +41,6 @@ export default function LibraryScreen() {
     setLoading(false);
   };
 
-  // Refetch every time the tab comes into focus
-  // so new books added show up immediately
   useFocusEffect(
     useCallback(() => {
       fetchBooks();
@@ -57,7 +55,6 @@ export default function LibraryScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={[styles.container, { paddingTop: top }]}>
 
-        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>The Editorial Archive</Text>
           <Text style={styles.headerCount}>
@@ -65,7 +62,6 @@ export default function LibraryScreen() {
           </Text>
         </View>
 
-        {/* Graph */}
         <View
           style={styles.canvas}
           onLayout={(e) =>
@@ -92,7 +88,6 @@ export default function LibraryScreen() {
             layout.width > 0 && (
               <Svg width={layout.width} height={layout.height}>
 
-                {/* Lines from center to each node */}
                 {positions.map((pos, i) => (
                   <Line
                     key={`line-${i}`}
@@ -106,7 +101,6 @@ export default function LibraryScreen() {
                   />
                 ))}
 
-                {/* Center hub */}
                 <Circle
                   cx={cx}
                   cy={cy}
@@ -120,12 +114,10 @@ export default function LibraryScreen() {
                   fill={Colors.primaryContainer}
                 />
 
-                {/* Book nodes */}
                 {books.map((book, i) => {
                   const pos = positions[i];
                   return (
                     <React.Fragment key={book.id}>
-                      {/* Tap target */}
                       <Circle
                         cx={pos.x}
                         cy={pos.y}
@@ -135,7 +127,6 @@ export default function LibraryScreen() {
                         strokeWidth={1.5}
                         onPress={() => setSelectedBook(book)}
                       />
-                      {/* Rating number inside node */}
                       <SvgText
                         x={pos.x}
                         y={pos.y + 1}
@@ -148,7 +139,6 @@ export default function LibraryScreen() {
                       >
                         {"★ " + book.rating}
                       </SvgText>
-                      {/* Title label below node */}
                       <SvgText
                         x={pos.x}
                         y={pos.y + NODE_RADIUS + 14}
@@ -168,7 +158,6 @@ export default function LibraryScreen() {
           )}
         </View>
 
-        {/* Bottom sheet */}
         <BookDetailSheet
           book={selectedBook}
           onClose={() => setSelectedBook(null)}

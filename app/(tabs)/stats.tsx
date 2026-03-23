@@ -39,7 +39,6 @@ function BarChart({
 
         return (
           <React.Fragment key={m.month}>
-            {/* Bar */}
             <Rect
               x={x}
               y={y}
@@ -48,7 +47,6 @@ function BarChart({
               rx={4}
               fill={m.count > 0 ? Colors.primary : Colors.surfaceContainerHigh}
             />
-            {/* Count above bar */}
             {m.count > 0 && (
               <SvgText
                 x={x + BAR_WIDTH / 2}
@@ -61,7 +59,6 @@ function BarChart({
                 {m.count}
               </SvgText>
             )}
-            {/* Month label below bar */}
             <SvgText
               x={x + BAR_WIDTH / 2}
               y={CHART_HEIGHT + CHART_PADDING_BOTTOM - 4}
@@ -117,7 +114,6 @@ export default function StatsScreen() {
       contentContainerStyle={[styles.scroll, { paddingTop: top + 16 }]}
       showsVerticalScrollIndicator={false}
     >
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>The Numbers</Text>
         <Text style={styles.headerSubtitle}>
@@ -140,7 +136,6 @@ export default function StatsScreen() {
         </View>
       ) : (
         <>
-          {/* Stat cards */}
           <View style={styles.cardRow}>
             <StatCard label="Books Read" value={stats.totalBooks} />
             <StatCard
@@ -154,10 +149,8 @@ export default function StatsScreen() {
             />
           </View>
 
-          {/* Chart section */}
           {stats.byYear.length > 0 && (
             <View style={styles.chartCard}>
-              {/* Year selector */}
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -185,10 +178,8 @@ export default function StatsScreen() {
                 })}
               </ScrollView>
 
-              {/* Chart label */}
               <Text style={styles.chartLabel}>Books per month</Text>
 
-              {/* Bar chart */}
               {selectedYearData && (
                 <ScrollView
                   horizontal
