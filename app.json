@@ -4,7 +4,7 @@
     "slug": "zeplo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/logo.png",
     "scheme": "zeplo",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
