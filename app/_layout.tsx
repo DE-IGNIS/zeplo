@@ -33,7 +33,6 @@ export default function RootLayout() {
     WorkSans_400Regular,
     WorkSans_500Medium,
     WorkSans_600SemiBold,
-    // MaterialSymbolsOutlined: require("../assets/fonts/MaterialSymbolsOutlined.ttf"),
   });
 
   useEffect(() => {
