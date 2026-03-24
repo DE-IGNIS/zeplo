@@ -16,7 +16,6 @@ import {
   WorkSans_600SemiBold,
 } from "@expo-google-fonts/work-sans";
 import { supabase } from "../lib/supabase";
-import * as Font from "expo-font";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,7 +41,14 @@ export default function RootLayout() {
       setSession(session);
       setInitialized(true);
     });
-    return () => subscription.unsubscribe();
+    const timeout = setTimeout(() => {
+      setInitialized(true);
+    }, 3000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   useEffect(() => {
